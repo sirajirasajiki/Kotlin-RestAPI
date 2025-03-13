@@ -27,6 +27,10 @@ class MessageController(private val service: MessageService)  {
     fun getMessage(@PathVariable id: String): ResponseEntity<Message> =
         service.findMessageById(id).toResponseEntity()
 
+    @GetMapping("text/{text}")
+    fun getMessageText(@PathVariable text: String): ResponseEntity<Message> =
+        service.findMessageByText(text).toResponseEntity()
+
     private fun Message?.toResponseEntity(): ResponseEntity<Message> =
         // If the message is null (not found), set response code to 404
         this?.let { ResponseEntity.ok(it) } ?: ResponseEntity.notFound().build()

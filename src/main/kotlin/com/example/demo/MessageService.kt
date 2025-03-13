@@ -16,6 +16,10 @@ class MessageService(private val db: JdbcTemplate) {
         Message(response.getString("id"), response.getString("text"))
     }.singleOrNull()
 
+    fun findMessageByText(text: String): Message? = db.query("select * from messages where text = ?", text) { response, _ ->
+        Message(response.getString("id"), response.getString("text"))
+    }.singleOrNull()
+
 
     fun save(message: Message): Message {
         //IDが指定されていなければ新規IDの生成
